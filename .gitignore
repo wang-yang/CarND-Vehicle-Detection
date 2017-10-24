@@ -4,3 +4,5 @@ non-vehicles.zip
 non-vehicles/
 vehicles.zip
 vehicles/
+.DS_Store
+examples/.DS_Store
