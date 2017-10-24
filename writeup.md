@@ -177,14 +177,13 @@ Here's a [link to my video result](./vehicle_detected.mp4)
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  The heat maps are tracked over 10 frames. I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.
+The code cell I used to filter false positives and method for combining overlapping bounding boxes is `#22` and `#23`.
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded(I use `threashold=1`) that map to identify vehicle positions. The heatmaps are tracked over 10 frames. I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap. Then I assumed each blob corresponded to a vehicle. Finally I constructed bounding boxes to cover the area of each blob detected.
 
-### Here are six frames and their corresponding heatmaps:
+I have try to use `threadhold=2`, but for the last test image below, it will false to track the vehicle. So finally I use `threadhold=1`.
 
-To reduce false positives and combine detected boxes, heat map and thresholding is implemented in cells #21 and 22. The results for the test images is as follows:
-
+Here are the result showing the heatmap from a series of frames of video:
 
 ![png](output_images/result1.png)
 
@@ -199,15 +198,14 @@ To reduce false positives and combine detected boxes, heat map and thresholding 
 ![png](output_images/result6.png)
 
 
-
 ---
 
 ### Discussion
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-There are still some false positives in the model especially for areas within shades. The models at points faces challenges to fully detect a car which is on the side. Larger set of training data can help the model to perform better. Also, better feature extration using combined color spaces can be helpful.
+There are still some false positives in the model. I think if we use more training data, it will help the model to perform better. And fine tune the feature extraction can also can be helpful.
 
-Also, the model is performs relatively slow which can be a challenge for real-time implementation.
+Apart from above, the model is performs relatively slow which can be a challenge for real-time implementation. I think the new deep learning based YOLO model would be a good next step experiments.
 
-Oncoming traffic is occationally picked up by the model. This can be improved by narrowing the search window to the area in front of the car.
+Oncoming vehicles is sometime picked up by the model. This can be improved by narrowing the search window to the area in front of the car.
